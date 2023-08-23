@@ -9,7 +9,7 @@ class HomeScreenComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double responsiveWidth = MediaQuery.of(context).size.width;
+    // double responsiveWidth = MediaQuery.of(context).size.width;
     double responsiveHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
