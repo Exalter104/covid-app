@@ -1,7 +1,13 @@
 // ignore_for_file: unused_field
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_flutter_boilerplate/utils/assets/app_images.dart';
+import 'dart:math' as math;
+
+import 'package:my_flutter_boilerplate/utils/utils.dart';
 import 'package:my_flutter_boilerplate/view_model/controller/splash_screen_controller.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,47 +17,70 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  final SplashScreenController _splashScreenController =
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+// ................Animation Controller.........................................
+  SplashScreenController splashScreenController =
       Get.put(SplashScreenController());
+
+  late final AnimationController _controller =
+      AnimationController(duration: const Duration(seconds: 3), vsync: this)
+        ..repeat();
+
+  @override
+  void dispose() {
+    super.dispose();
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+    // Timer(const Duration(seconds: 2), () => Get.to(RoutesName.homeScreen));
+    splashScreenController.isLogin();
   }
 
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 428;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-        padding:
-            EdgeInsets.fromLTRB(81 * fem, 322 * fem, 80.06 * fem, 323.07 * fem),
-        width: double.infinity,
-        height: 913 * fem,
-        decoration: BoxDecoration(
-          color: const Color(0xff436eee),
-          border: Border.all(color: const Color(0x7f000000)),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0x3f000000),
-              offset: Offset(0 * fem, 4 * fem),
-              blurRadius: 2 * fem,
+    double responsiveWidth = MediaQuery.of(context).size.width;
+    double responsiveHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: SafeArea(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+              animation: _controller,
+              child: SizedBox(
+                height: responsiveHeight * .3,
+                width: responsiveWidth * 0.4,
+                child: Center(
+                  child: Image.asset(
+                    AppImages.splashScreenLogo,
+                    height: responsiveHeight * 0.7,
+                  ),
+                ),
+              ),
+              builder: (BuildContext context, Widget? child) {
+                return Transform.rotate(
+                  angle: _controller.value * 2.0 * math.pi,
+                  child: child,
+                );
+              }),
+          // SizedBox(height: responsiveHeight * .002),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Covid-19\n Tracker App ",
+              textAlign: TextAlign.center,
+              style: SafeGoogleFont("Monsterrate",
+                  fontSize: 26, fontWeight: FontWeight.bold),
             ),
-          ],
-        ),
-        child: Center(
-          // e8875059a0419599e9a2554d3ed0e9 (33:362)
-          child: SizedBox(
-            width: 266.94 * fem,
-            height: 267.93 * fem,
-            child: Image.asset(
-              'assets/saiflogooo.png',
-            ),
-          ),
-        ),
-      ),
+          )
+        ],
+      )),
     );
   }
 }

@@ -13,8 +13,7 @@ class SplashScreenController extends GetxController {
   }
 
   void isLogin() {
-    Timer(const Duration(seconds: 2),
-        () => Get.offAllNamed(RoutesName.homeMainScreen));
+    Timer(const Duration(seconds: 2), () => Get.toNamed(RoutesName.homeScreen));
     // : Get.offAllNamed(RoutesName.welcomeScreen));
     update();
   }
