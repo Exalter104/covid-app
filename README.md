@@ -1,4 +1,4 @@
-# my_flutter_boilerplate
+# my covid app flutter
 
 A new Flutter project.
 
